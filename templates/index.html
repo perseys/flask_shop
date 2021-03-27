@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h1>{{title}}</h1>
+
+<table class="table table-hover">
+    <tr>
+        <th>Наименование</th>
+        <th>Артикул</th>
+        <th>Цена</th>
+    </tr>
+    {% for item in goods %}
+    <tr>
+        <td><a href="/goods/{{ item.id }}">{{ item.title }}</a></td>
+        <td>{{ item.article }}</td>
+        <td>{{ item.price }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% if current_user.is_authenticated %}
+<a href="/add_good" class="btn btn-secondary btn-sm">Создать товар</a>
+{% else %}
+<p>только авторизованный сотрудник магазина может создавать товары</p>
+{% endif %}
+
+
+
+{% endblock %}

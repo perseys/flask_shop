@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(class="form-control") }}<br>
+            {% for error in form.title.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.article.label }}<br>
+            {{ form.article(class="form-control") }}<br>
+            {% for error in form.article.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description(class="form-control") }}<br>
+            {% for error in form.description.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.price.label }}<br>
+            {{ form.price(class="form-control") }}<br>
+            {% for error in form.price.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.is_active.label }}<br>
+            {{ form.is_active(class="form-control") }}<br>
+            {% for error in form.is_active.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+        </p>
+
+        <div class="form-file">
+            <input type="file" class="form-file-input" id="customFile">
+            <label class="form-file-label" for="customFile">
+                <span class="form-file-text">Choose file...</span>
+                <span class="form-file-button">Browse</span>
+            </label>
+        </div>
+
+        <p>{{ form.submit(type="submit", class="btn btn-secondary btn-sm") }}</p>
+        {{message}}
+    </form>
+
+
+{% endblock %}

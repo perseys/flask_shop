@@ -1,0 +1,10 @@
+flask~=1.1.2
+flask_wtf
+requests
+werkzeug~=1.0.1
+sqlalchemy~=1.4.2
+datetime~=4.3
+WTForms~=2.3.3
+SQLAlchemy-serializer
+flask-restful
+alembic
