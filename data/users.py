@@ -2,7 +2,6 @@ import datetime
 
 import sqlalchemy
 from flask_login import UserMixin
-from sqlalchemy import orm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from data.db_session import SqlAlchemyBase
@@ -17,6 +16,7 @@ class User(SqlAlchemyBase, UserMixin):
     phone = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    is_admin = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=False)
 
     # orders = orm.relation("Orders", back_populates='customer')
 

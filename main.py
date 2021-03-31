@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, render_template, redirect, request, make_response, jsonify
 from flask_login import login_user, logout_user, LoginManager, login_required
 from flask_restful import abort, Api
@@ -37,8 +39,8 @@ def main():
 @app.route("/")
 def index():
     db_sess = db_session.create_session()
-    # goods = db_sess.query(Good).filter(Good.is_active == True)
-    goods = db_sess.query(Good).all()
+    goods = db_sess.query(Good).filter(Good.is_active == True)
+    # goods = db_sess.query(Good).all()
 
     return render_template("index.html", goods=goods, title='Товары')
 
@@ -58,7 +60,7 @@ def add_good():
         db_sess.add(goods)
         db_sess.commit()
         return redirect('/')
-    return render_template('add_good.html', title='Добавление товара', form=form_add)
+    return render_template('add_good.html', title='Добавление товара', bt_title='Добавить товар', form=form_add)
 
 
 @app.route('/goods/<int:id>', methods=['GET', 'POST'])
@@ -80,20 +82,23 @@ def edit_goods(id):
         db_sess = db_session.create_session()
         goods = db_sess.query(Good).filter(Good.id == id).first()
         if goods:
-            form.title.data = goods.title
-            form.article.data = goods.article
-            form.description.data = goods.description
-            form.price.data = goods.price
-            form.is_active.data = goods.is_active
+            goods.title = form.title.data
+            goods.article = form.article.data
+            goods.description = form.description.data
+            goods.price = form.price.data
+            goods.is_active = form.is_active.data
+            goods.modified_date = datetime.now()
+            db_sess.merge(goods)
             return redirect('/')
         else:
             abort(404)
-    return render_template('add_good.html', title='Редактирование товара', form=form)
+    return render_template('add_good.html', title='Редактирование товара', bt_title='Изменить товар', form=form)
 
 
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 @login_manager.user_loader
 def load_user(user_id):
